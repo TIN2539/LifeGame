@@ -6,17 +6,19 @@ namespace LifeGame
 	internal class Game
 	{
 		private Field field;
-		private int delay = 300;
+		private int delay;
 		private Generation generation;
 		private Memento momento;
+		readonly static char characterForCursor = 'X';
+
 
 		public Game(int column, int row, int delay)
 		{
 			field = new Field(column, row);
 			generation = new Generation();
 			momento = new Memento();
-			CurrentX = 1;
-			CurrentY = 3;
+			CurrentX = 1;	//В начале игры позиция курсора - левый верхний угол игрового поля. Х = 1, Y = 3
+			CurrentY = 3;	//В начале игры позиция курсора - левый верхний угол игрового поля. Х = 1, Y = 3
 			this.delay = delay;
 		}
 
@@ -35,21 +37,21 @@ namespace LifeGame
 			{
 				Console.SetCursorPosition(CurrentX += 1, CurrentY);
 			}
-			else if (key == ConsoleKey.LeftArrow && CurrentX > 1)
+			else if (key == ConsoleKey.LeftArrow && CurrentX > field.GetLeftMost())		
 			{
 				Console.SetCursorPosition(CurrentX -= 1, CurrentY);
 			}
-			else if (key == ConsoleKey.DownArrow && CurrentY < field.GetColumn() + 2)
+			else if (key == ConsoleKey.DownArrow && CurrentY < field.GetWidth())
 			{
 				Console.SetCursorPosition(CurrentX, CurrentY += 1);
 			}
-			else if (key == ConsoleKey.UpArrow && CurrentY > 3)
+			else if (key == ConsoleKey.UpArrow && CurrentY > field.GetTopMost())				
 			{
 				Console.SetCursorPosition(CurrentX, CurrentY -= 1);
 			}
 			else if (key == ConsoleKey.Enter)
 			{
-				field.GetCells()[CurrentY - 3, CurrentX - 1].ChangeStatus();
+				field.GetCells()[CurrentY - field.GetTopMost(), CurrentX - field.GetLeftMost()].ChangeStatus();
 			}
 			else if (key == ConsoleKey.Spacebar)
 			{
@@ -89,7 +91,6 @@ namespace LifeGame
 		private void Play()
 		{
 			generation.Paint();
-			
 			momento.Add(field.GetCells());
 			Cell[,] tempCells = new Cell[field.GetColumn(), field.GetRow()];
 			for (int i = 0; i < field.GetColumn(); i++)
@@ -103,11 +104,11 @@ namespace LifeGame
 			{
 				for (int j = 0; j < field.GetRow(); j++)
 				{
-					if (field.GetCells()[i, j].GetStatus() && Rules(i, j) != 3 && Rules(i, j) != 2)
+					if (field.GetCells()[i, j].GetStatus() && Rules(i, j) != 3 && Rules(i, j) != 2)     //Rules(i, j) != 3 && Rules(i, j) != 2  -- вокруг живой ячейки нету 3 или 2 живых ячеек
 					{
 						tempCells[i, j].ChangeStatus();
 					}
-					else if (!field.GetCells()[i, j].GetStatus() && Rules(i, j) == 3)
+					else if (!field.GetCells()[i, j].GetStatus() && Rules(i, j) == 3)       //Rules(i, j) == 3 -- вокруг мертвой ячейки ровно 3 живие ячейки
 					{
 						tempCells[i, j].ChangeStatus();
 					}
@@ -352,7 +353,7 @@ namespace LifeGame
 			field.Update();
 			Console.SetCursorPosition(CurrentX, CurrentY);
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.Write('X');
+			Console.Write(characterForCursor);
 			Console.ResetColor();
 		}
 	}

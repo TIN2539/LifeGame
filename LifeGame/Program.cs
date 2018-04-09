@@ -7,9 +7,11 @@ namespace LifeGame
 	{
 		internal static void Main(string[] args)
 		{
-			int column = 10;
+			//Default parameters
+			int column = 10;		
 			int row = 40;
 			int delay = 300;
+			char[] parameters = { 'w', 'h', 's' };      //w - width, h - height, s - delay
 			Game game = null;
 			if (args.Length == 0)
 			{
@@ -17,14 +19,14 @@ namespace LifeGame
 			}
 			else
 			{
-				char[] parameter = new char[3];
+				char[] parameter = new char[args.Length];
 				for (int i = 0; i < args.Length; i++)
 				{
 					args[i].ToLower();
 					parameter[i] = args[i].First();
 				}
 				bool correctParameters = true;
-				if (!parameter.Contains('w') && parameter.Contains('h'))
+				if (!parameter.Contains(parameters[0]) && parameter.Contains(parameters[1]))
 				{
 					correctParameters = false;
 					Console.Write("Invalid arguments: ");
@@ -32,7 +34,7 @@ namespace LifeGame
 					Console.WriteLine("Width of the Universe was not specified.");
 					Console.ResetColor();
 				}
-				else if (parameter.Contains('w') && !parameter.Contains('h'))
+				else if (parameter.Contains(parameters[0]) && !parameter.Contains(parameters[1]))
 				{
 					correctParameters = false;
 					Console.Write("Invalid arguments: ");
@@ -44,17 +46,17 @@ namespace LifeGame
 				{
 					for (int i = 0; i < args.Length; i++)
 					{
-						if (args[i].First() == 'w')
+						if (args[i].First() == parameters[0])
 						{
 							args[i] = args[i].Substring(1);
 							row = int.Parse(args[i]);
 						}
-						if (args[i].First() == 'h')
+						if (args[i].First() == parameters[1])
 						{
 							args[i] = args[i].Substring(1);
 							column = int.Parse(args[i]);
 						}
-						if (args[i].First() == 's')
+						if (args[i].First() == parameters[2])
 						{
 							args[i] = args[i].Substring(1);
 							delay = int.Parse(args[i]);
@@ -73,7 +75,7 @@ namespace LifeGame
 					game.Update();
 				} while (game.KeyPressed(Console.ReadKey(true).Key));
 
-				Console.SetCursorPosition(1, column + 5);
+				Console.SetCursorPosition(game.GetField().GetLeftMost(), game.GetField().GetWidth() + game.GetField().GetTopMost());
 				//Console.WriteLine("GAME OVER!");
 			}
 		}
