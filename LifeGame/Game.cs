@@ -12,13 +12,13 @@ namespace LifeGame
 		readonly static char characterForCursor = 'X';
 
 
-		public Game(int column, int row, int delay)
+		public Game(int row, int column, int delay)
 		{
-			field = new Field(column, row);
+			field = new Field(row, column);
 			generation = new Generation();
 			momento = new Memento();
-			CurrentX = 1;	//В начале игры позиция курсора - левый верхний угол игрового поля. Х = 1, Y = 3
-			CurrentY = 3;	//В начале игры позиция курсора - левый верхний угол игрового поля. Х = 1, Y = 3
+			CurrentX = field.GetLeftMost();	
+			CurrentY = field.GetTopMost();	
 			this.delay = delay;
 		}
 
@@ -33,7 +33,7 @@ namespace LifeGame
 
 		public bool KeyPressed(ConsoleKey key)
 		{
-			if (key == ConsoleKey.RightArrow && CurrentX < field.GetRow())
+			if (key == ConsoleKey.RightArrow && CurrentX < field.GetColumn())
 			{
 				Console.SetCursorPosition(CurrentX += 1, CurrentY);
 			}
@@ -41,7 +41,7 @@ namespace LifeGame
 			{
 				Console.SetCursorPosition(CurrentX -= 1, CurrentY);
 			}
-			else if (key == ConsoleKey.DownArrow && CurrentY < field.GetWidth())
+			else if (key == ConsoleKey.DownArrow && CurrentY < field.GetHeight())
 			{
 				Console.SetCursorPosition(CurrentX, CurrentY += 1);
 			}
@@ -75,9 +75,9 @@ namespace LifeGame
 
 		private bool AllDie()
 		{
-			for (int i = 0; i < field.GetColumn(); i++)
+			for (int i = 0; i < field.GetRow(); i++)
 			{
-				for (int j = 0; j < field.GetRow(); j++)
+				for (int j = 0; j < field.GetColumn(); j++)
 				{
 					if (field.GetCells()[i, j].GetStatus())
 					{
@@ -92,17 +92,17 @@ namespace LifeGame
 		{
 			generation.Paint();
 			momento.Add(field.GetCells());
-			Cell[,] cellForMakeChanges = new Cell[field.GetColumn(), field.GetRow()];
-			for (int i = 0; i < field.GetColumn(); i++)
+			Cell[,] cellForMakeChanges = new Cell[field.GetRow(), field.GetColumn()];
+			for (int i = 0; i < field.GetRow(); i++)
 			{
-				for (int j = 0; j < field.GetRow(); j++)
+				for (int j = 0; j < field.GetColumn(); j++)
 				{
 					cellForMakeChanges[i, j] = new Cell(field.GetCells()[i, j].GetStatus());
 				}
 			}
-			for (int i = 0; i < field.GetColumn(); i++)
+			for (int i = 0; i < field.GetRow(); i++)
 			{
-				for (int j = 0; j < field.GetRow(); j++)
+				for (int j = 0; j < field.GetColumn(); j++)
 				{
 					if (field.GetCells()[i, j].GetStatus() && Rules(i, j) != 3 && Rules(i, j) != 2)     //Rules(i, j) != 3 && Rules(i, j) != 2  -- вокруг живой ячейки нету 3 или 2 живых ячеек
 					{
@@ -124,19 +124,19 @@ namespace LifeGame
 		private int Rules(int y, int x)
 		{
 			int countOfAliveCell = 0;
-			if (y == 0 && x == 0)
+			if (x == 0 && y == 0)
 			{
 				countOfAliveCell = CheckLeftTop(y, x);
 			}
-			else if (y == 0 && x == field.GetRow() - 1)
+			else if (x == field.GetColumn() - 1 && y == 0)
 			{
 				countOfAliveCell = CheckRightTop(y, x);
 			}
-			else if (y == field.GetColumn() - 1 && x == 0)
+			else if (x == 0 && y == field.GetRow() - 1)
 			{
 				countOfAliveCell = CheckLeftBottom(y, x);
 			}
-			else if (y == field.GetColumn() - 1 && x == field.GetRow() - 1)
+			else if (x == field.GetColumn() - 1 && y == field.GetRow() - 1)
 			{
 				countOfAliveCell = CheckRightBottom(y, x);
 			}
@@ -148,11 +148,11 @@ namespace LifeGame
 			{
 				countOfAliveCell = CheckLeft(y, x);
 			}
-			else if (y == field.GetColumn() - 1)
+			else if (y == field.GetRow() - 1)
 			{
 				countOfAliveCell = CheckBottom(y, x);
 			}
-			else if (x == field.GetRow() - 1)
+			else if (x == field.GetColumn() - 1)
 			{
 				countOfAliveCell = CheckRight(y, x);
 			}

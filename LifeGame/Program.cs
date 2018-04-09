@@ -8,14 +8,14 @@ namespace LifeGame
 		internal static void Main(string[] args)
 		{
 			//Default parameters
-			int column = 10;		
-			int row = 40;
+			int row = 10;		
+			int column = 40;
 			int delay = 300;
 			char[] parameters = { 'w', 'h', 's' };      //w - width, h - height, s - delay
 			Game game = null;
 			if (args.Length == 0)
 			{
-				game = new Game(column, row, delay);
+				game = new Game(row, column, delay);
 			}
 			else
 			{
@@ -75,7 +75,7 @@ namespace LifeGame
 					game.Update();
 				} while (game.KeyPressed(Console.ReadKey(true).Key));
 
-				Console.SetCursorPosition(game.GetField().GetLeftMost(), game.GetField().GetWidth() + game.GetField().GetTopMost());
+				Console.SetCursorPosition(game.GetField().GetLeftMost(), game.GetField().GetHeight() + game.GetField().GetTopMost());
 				//Console.WriteLine("GAME OVER!");
 			}
 		}

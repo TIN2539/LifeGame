@@ -7,7 +7,7 @@ namespace LifeGame
 		private int column;
 		private int row;
 		private int width;
-		private int length;
+		private int height;
 		readonly static int leftMost = 1;
 		readonly static int topMost = 3;
 		readonly static char characterForFrame = '+';
@@ -15,16 +15,16 @@ namespace LifeGame
 		readonly static char characterForAliveCell = 'O';
 		private Cell[,] cells;
 
-		public Field(int column, int row)
+		public Field(int row, int column)
 		{
 			this.column = column;
 			this.row = row;
 			width = column + 2;		//+2 - поправка с учетом наличия нижней и верхней границ поля
-			length = row + 2;       //+2 - поправка с учетом наличия левой и правой границ поля
-			cells = new Cell[column, row];
-			for (int i = 0; i < column; i++)
+			height = row + 2;       //+2 - поправка с учетом наличия левой и правой границ поля
+			cells = new Cell[row, column];
+			for (int i = 0; i < row; i++)
 			{
-				for (int j = 0; j < row; j++)
+				for (int j = 0; j < column; j++)
 				{
 					cells[i, j] = new Cell();
 				}
@@ -35,11 +35,11 @@ namespace LifeGame
 		{
 			Console.CursorVisible = false;
 			Console.SetCursorPosition(Game.CurrentX - 1, Game.CurrentY - 1);
-			for (int i = 0; i < width; i++)
+			for (int i = 0; i < height; i++)
 			{
-				for (int j = 0; j < length; j++)
+				for (int j = 0; j < width; j++)
 				{
-					if (i == 0 || i == width - 1 || j == 0 || j == length - 1)
+					if (i == 0 || i == height - 1 || j == 0 || j == width  - 1)
 					{
 						Console.Write(characterForFrame);
 					}
@@ -55,9 +55,9 @@ namespace LifeGame
 		public void Update()
 		{
 			Console.SetCursorPosition(leftMost, topMost);
-			for (int i = 0; i < column; i++)
+			for (int i = 0; i < row; i++)
 			{
-				for (int j = 0; j < row; j++)
+				for (int j = 0; j < column; j++)
 				{
 					if (cells[i, j].GetStatus())
 					{
@@ -87,6 +87,11 @@ namespace LifeGame
 		public int GetWidth()
 		{
 			return width;
+		}
+
+		public int GetHeight()
+		{
+			return height;
 		}
 
 		public int GetLeftMost()
