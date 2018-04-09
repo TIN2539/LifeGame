@@ -5,7 +5,7 @@ namespace LifeGame
 {
 	internal class Program
 	{
-		static void Main(string[] args)
+		internal static void Main(string[] args)
 		{
 			int column = 10;
 			int row = 40;
