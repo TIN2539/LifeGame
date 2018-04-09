@@ -8,9 +8,9 @@
 		{
 		}
 
-		public Cell(bool status)
+		public Cell(bool lifeStatus)
 		{
-			lifeStatus = status;
+			this.lifeStatus = lifeStatus;
 		}
 
 		public void ChangeStatus()

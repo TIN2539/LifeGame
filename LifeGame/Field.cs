@@ -104,9 +104,9 @@ namespace LifeGame
 			return cells;
 		}
 
-		internal void SetCell(Cell[,] tempCells)
+		internal void SetCell(Cell[,] cells)
 		{
-			cells = tempCells;
+			this.cells = cells;
 		}
 	}
 }
