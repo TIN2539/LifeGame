@@ -13,7 +13,7 @@ namespace LifeGame
 
 		public bool HasSameCells(Cell[,] currentCell)
 		{
-			bool hasSameCells = true;
+			bool hasSameCells = false;
 			if (memento.Count > 1)
 			{
 				foreach (Cell[,] cells in memento)
@@ -36,27 +36,32 @@ namespace LifeGame
 					}
 					if (hasSameCells)
 					{
-						return hasSameCells;
+						break;
 					}
 				}
-				return hasSameCells;
 			}
-			return false;
+			return hasSameCells;
 		}
 
 		public bool IsIdenticalCells(Cell[,] currentCell)
 		{
+			bool isAdenticalCells = true;
 			for (int y = 0; y < currentCell.GetLength(0); y++)
 			{
 				for (int x = 0; x < currentCell.GetLength(1); x++)
 				{
 					if (memento[memento.Count - 1][y, x].GetIsAlive() != currentCell[y, x].GetIsAlive())
 					{
-						return false;
+						isAdenticalCells = false;
+						break;
 					}
 				}
+				if(!isAdenticalCells)
+				{
+					break;
+				}
 			}
-			return true;
+			return isAdenticalCells;
 		}
 
 		internal void Add(Cell[,] cell)

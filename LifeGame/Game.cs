@@ -33,6 +33,7 @@ namespace LifeGame
 
 		public bool IsKeyPressed(ConsoleKey key)
 		{
+			bool isSpacebarPressed = false;
 			if (key == ConsoleKey.RightArrow && CurrentX < field.GetColumn())
 			{
 				Console.SetCursorPosition(CurrentX += 1, CurrentY);
@@ -59,33 +60,40 @@ namespace LifeGame
 				{
 					Play();
 				} while (!IsGameOver());
-				return false;
+				isSpacebarPressed = true;
 			}
-			return true;
+			return isSpacebarPressed;
 		}
 
 		private bool IsGameOver()
 		{
+			bool isGameOver = false;
 			if(AreAllDie() || momento.IsIdenticalCells(field.GetCells()) || momento.HasSameCells(field.GetCells()))
 			{
-				return true;
+				isGameOver = true;
 			}
-			return false;
+			return isGameOver;
 		}
 
 		private bool AreAllDie()
 		{
+			bool areAllDie = true;
 			for (int i = 0; i < field.GetRow(); i++)
 			{
 				for (int j = 0; j < field.GetColumn(); j++)
 				{
 					if (field.GetCells()[i, j].GetIsAlive())
 					{
-						return false;
+						areAllDie = false;
+						break;
 					}
 				}
+				if(!areAllDie)
+				{
+					break;
+				}
 			}
-			return true;
+			return areAllDie;
 		}
 
 		private void Play()
