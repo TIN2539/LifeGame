@@ -13,33 +13,33 @@ namespace LifeGame
 
 		public bool CompareCycle(Cell[,] currentCell)
 		{
-			bool check = true;
+			bool checkForMatch = true;
 			if (memento.Count > 1)
 			{
 				foreach (Cell[,] cell in memento)
 				{
-					check = true;
+					checkForMatch = true;
 					for (int i = 0; i < cell.GetLength(0); i++)
 					{
 						for (int j = 0; j < cell.GetLength(1); j++)
 						{
 							if (cell[i, j].GetStatus() != currentCell[i, j].GetStatus())
 							{
-								check = false;
+								checkForMatch = false;
 								break;
 							}
 						}
-						if (!check)
+						if (!checkForMatch)
 						{
 							break;
 						}
 					}
-					if (check)
+					if (checkForMatch)
 					{
-						return check;
+						return checkForMatch;
 					}
 				}
-				return check;
+				return checkForMatch;
 			}
 			return false;
 		}
@@ -61,15 +61,15 @@ namespace LifeGame
 
 		internal void Add(Cell[,] cell)
 		{
-			Cell[,] tempCell = new Cell[cell.GetLength(0), cell.GetLength(1)];
-			for (int i = 0; i < tempCell.GetLength(0); i++)
+			Cell[,] cellOfCurrentField = new Cell[cell.GetLength(0), cell.GetLength(1)];
+			for (int i = 0; i < cellOfCurrentField.GetLength(0); i++)
 			{
-				for (int j = 0; j < tempCell.GetLength(1); j++)
+				for (int j = 0; j < cellOfCurrentField.GetLength(1); j++)
 				{
-					tempCell[i, j] = new Cell(cell[i, j].GetStatus());
+					cellOfCurrentField[i, j] = new Cell(cell[i, j].GetStatus());
 				}
 			}
-			memento.Add(tempCell);
+			memento.Add(cellOfCurrentField);
 		}
 	}
 }
