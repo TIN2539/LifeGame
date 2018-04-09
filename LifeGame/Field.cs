@@ -59,7 +59,7 @@ namespace LifeGame
 			{
 				for (int j = 0; j < column; j++)
 				{
-					if (cells[i, j].GetStatus())
+					if (cells[i, j].GetIsAlive())
 					{
 						Console.ForegroundColor = ConsoleColor.DarkGreen;
 						Console.Write(characterForAliveCell);

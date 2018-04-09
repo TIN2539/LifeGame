@@ -11,46 +11,46 @@ namespace LifeGame
 			memento = new List<Cell[,]> { };
 		}
 
-		public bool CompareCycle(Cell[,] currentCell)
+		public bool HasSameCells(Cell[,] currentCell)
 		{
-			bool checkForMatch = true;
+			bool hasSameCells = true;
 			if (memento.Count > 1)
 			{
-				foreach (Cell[,] cell in memento)
+				foreach (Cell[,] cells in memento)
 				{
-					checkForMatch = true;
-					for (int i = 0; i < cell.GetLength(0); i++)
+					hasSameCells = true;
+					for (int i = 0; i < cells.GetLength(0); i++)
 					{
-						for (int j = 0; j < cell.GetLength(1); j++)
+						for (int j = 0; j < cells.GetLength(1); j++)
 						{
-							if (cell[i, j].GetStatus() != currentCell[i, j].GetStatus())
+							if (cells[i, j].GetIsAlive() != currentCell[i, j].GetIsAlive())
 							{
-								checkForMatch = false;
+								hasSameCells = false;
 								break;
 							}
 						}
-						if (!checkForMatch)
+						if (!hasSameCells)
 						{
 							break;
 						}
 					}
-					if (checkForMatch)
+					if (hasSameCells)
 					{
-						return checkForMatch;
+						return hasSameCells;
 					}
 				}
-				return checkForMatch;
+				return hasSameCells;
 			}
 			return false;
 		}
 
-		public bool CompareLastVariant(Cell[,] currentCell)
+		public bool IsIdenticalCells(Cell[,] currentCell)
 		{
 			for (int y = 0; y < currentCell.GetLength(0); y++)
 			{
 				for (int x = 0; x < currentCell.GetLength(1); x++)
 				{
-					if (memento[memento.Count - 1][y, x].GetStatus() != currentCell[y, x].GetStatus())
+					if (memento[memento.Count - 1][y, x].GetIsAlive() != currentCell[y, x].GetIsAlive())
 					{
 						return false;
 					}
@@ -66,7 +66,7 @@ namespace LifeGame
 			{
 				for (int j = 0; j < cellOfCurrentField.GetLength(1); j++)
 				{
-					cellOfCurrentField[i, j] = new Cell(cell[i, j].GetStatus());
+					cellOfCurrentField[i, j] = new Cell(cell[i, j].GetIsAlive());
 				}
 			}
 			memento.Add(cellOfCurrentField);

@@ -2,25 +2,26 @@
 {
 	internal class Cell
 	{
-		private bool lifeStatus = false;
+		private bool isAlive;
 
 		public Cell()
 		{
+			isAlive = false;
 		}
 
-		public Cell(bool lifeStatus)
+		public Cell(bool isAlive)
 		{
-			this.lifeStatus = lifeStatus;
+			this.isAlive = isAlive;
 		}
 
 		public void ChangeStatus()
 		{
-			lifeStatus = !lifeStatus;
+			isAlive = !isAlive;
 		}
 
-		public bool GetStatus()
+		public bool GetIsAlive()
 		{
-			return lifeStatus;
+			return isAlive;
 		}
 	}
 }

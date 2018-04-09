@@ -73,7 +73,7 @@ namespace LifeGame
 				do
 				{
 					game.Update();
-				} while (game.KeyPressed(Console.ReadKey(true).Key));
+				} while (game.IsKeyPressed(Console.ReadKey(true).Key));
 
 				Console.SetCursorPosition(game.GetField().GetLeftMost(), game.GetField().GetHeight() + game.GetField().GetTopMost());
 				//Console.WriteLine("GAME OVER!");
