@@ -43,6 +43,7 @@ namespace LifeGame
 			}
 			return false;
 		}
+
 		public bool CompareLastVariant(Cell[,] currentCell)
 		{
 			for (int y = 0; y < currentCell.GetLength(0); y++)
@@ -57,6 +58,7 @@ namespace LifeGame
 			}
 			return true;
 		}
+
 		internal void Add(Cell[,] cell)
 		{
 			Cell[,] tempCell = new Cell[cell.GetLength(0), cell.GetLength(1)];

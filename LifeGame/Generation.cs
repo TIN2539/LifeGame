@@ -10,6 +10,7 @@ namespace LifeGame
 		{
 			generationNumber++;
 		}
+
 		public void Paint()
 		{
 			Console.SetCursorPosition(0, 0);

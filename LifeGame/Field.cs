@@ -46,6 +46,7 @@ namespace LifeGame
 				Console.WriteLine();
 			}
 		}
+
 		public void Update()
 		{
 			int x = 1;
@@ -69,18 +70,22 @@ namespace LifeGame
 				Console.SetCursorPosition(x, ++y);
 			}
 		}
+
 		public int GetRow()
 		{
 			return row;
 		}
+
 		public int GetColumn()
 		{
 			return column;
 		}
+
 		public Cell[,] GetCells()
 		{
 			return cells;
 		}
+
 		internal void SetCell(Cell[,] tempCells)
 		{
 			cells = tempCells;

@@ -21,12 +21,14 @@ namespace LifeGame
 		}
 
 		public static int CurrentX { get; set; }
+
 		public static int CurrentY { get; set; }
 
 		public Field GetField()
 		{
 			return field;
 		}
+
 		public bool KeyPressed(ConsoleKey key)
 		{
 			if (key == ConsoleKey.RightArrow && CurrentX < field.GetRow())
@@ -59,6 +61,7 @@ namespace LifeGame
 			}
 			return true;
 		}
+
 		private bool GameOver()
 		{
 			if(AllDie() || momento.CompareLastVariant(field.GetCells()) || momento.CompareCycle(field.GetCells()))
@@ -67,6 +70,7 @@ namespace LifeGame
 			}
 			return false;
 		}
+
 		private bool AllDie()
 		{
 			for (int i = 0; i < field.GetColumn(); i++)
@@ -81,6 +85,7 @@ namespace LifeGame
 			}
 			return true;
 		}
+
 		private void Play()
 		{
 			generation.Paint();
@@ -114,6 +119,7 @@ namespace LifeGame
 			field.Update();
 			Thread.Sleep(delay);
 		}
+
 		private int Rulles(int y, int x)
 		{
 			int check = 0;
@@ -163,6 +169,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		private int CheckBottom(int y, int x)
 		{
 			int check = 0;
@@ -188,6 +195,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		private int CheckRight(int y, int x)
 		{
 			int check = 0;
@@ -213,6 +221,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		private int CheckTop(int y, int x)
 		{
 			int check = 0;
@@ -238,6 +247,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		private int CheckLeft(int y, int x)
 		{
 			int check = 0;
@@ -263,6 +273,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		private int CheckRightBottom(int y, int x)
 		{
 			int check = 0;
@@ -280,6 +291,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		private int CheckRightTop(int y, int x)
 		{
 			int check = 0;
@@ -297,6 +309,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		private int CheckLeftBottom(int y, int x)
 		{
 			int check = 0;
@@ -314,6 +327,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		private int CheckLeftTop(int y, int x)
 		{
 			int check = 0;
@@ -331,6 +345,7 @@ namespace LifeGame
 			}
 			return check;
 		}
+
 		public void Update()
 		{
 			generation.Paint();

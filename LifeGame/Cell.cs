@@ -7,6 +7,7 @@
 		public Cell()
 		{
 		}
+
 		public Cell(bool status)
 		{
 			lifeStatus = status;
@@ -23,6 +24,7 @@
 				lifeStatus = true;
 			}
 		}
+
 		public bool GetStatus()
 		{
 			return lifeStatus;
