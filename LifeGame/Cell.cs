@@ -15,14 +15,7 @@
 
 		public void ChangeStatus()
 		{
-			if (lifeStatus)
-			{
-				lifeStatus = false;
-			}
-			else
-			{
-				lifeStatus = true;
-			}
+			lifeStatus = !lifeStatus;
 		}
 
 		public bool GetStatus()
