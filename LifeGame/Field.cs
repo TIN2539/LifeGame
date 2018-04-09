@@ -7,7 +7,7 @@ namespace LifeGame
 		private int column = 10;
 		private int row = 40;
 		private int width = 12;
-		private int lenght = 42;
+		private int length = 42;
 		private Cell[,] cells;
 
 		public Field(int column, int row)
@@ -15,7 +15,7 @@ namespace LifeGame
 			this.column = column;
 			this.row = row;
 			width = column + 2;
-			lenght = row + 2;
+			length = row + 2;
 			cells = new Cell[column, row];
 			for (int i = 0; i < column; i++)
 			{
@@ -32,9 +32,9 @@ namespace LifeGame
 			Console.SetCursorPosition(Game.CurrentX - 1, Game.CurrentY - 1);
 			for (int i = 0; i < width; i++)
 			{
-				for (int j = 0; j < lenght; j++)
+				for (int j = 0; j < length; j++)
 				{
-					if (i == 0 || i == width - 1 || j == 0 || j == lenght - 1)
+					if (i == 0 || i == width - 1 || j == 0 || j == length - 1)
 					{
 						Console.Write('+');
 					}

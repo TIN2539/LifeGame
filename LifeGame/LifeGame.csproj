@@ -46,7 +46,7 @@
     <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Generation.cs" />
-    <Compile Include="Momento.cs" />
+    <Compile Include="Memento.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

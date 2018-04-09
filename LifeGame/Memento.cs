@@ -2,21 +2,21 @@
 
 namespace LifeGame
 {
-	internal class Momento
+	internal class Memento
 	{
-		private List<Cell[,]> momento;
+		private List<Cell[,]> memento;
 
-		public Momento()
+		public Memento()
 		{
-			momento = new List<Cell[,]> { };
+			memento = new List<Cell[,]> { };
 		}
 
 		public bool CompareCycle(Cell[,] currentCell)
 		{
 			bool check = true;
-			if (momento.Count > 1)
+			if (memento.Count > 1)
 			{
-				foreach (Cell[,] cell in momento)
+				foreach (Cell[,] cell in memento)
 				{
 					check = true;
 					for (int i = 0; i < cell.GetLength(0); i++)
@@ -50,7 +50,7 @@ namespace LifeGame
 			{
 				for (int x = 0; x < currentCell.GetLength(1); x++)
 				{
-					if (momento[momento.Count - 1][y, x].GetStatus() != currentCell[y, x].GetStatus())
+					if (memento[memento.Count - 1][y, x].GetStatus() != currentCell[y, x].GetStatus())
 					{
 						return false;
 					}
@@ -69,7 +69,7 @@ namespace LifeGame
 					tempCell[i, j] = new Cell(cell[i, j].GetStatus());
 				}
 			}
-			momento.Add(tempCell);
+			memento.Add(tempCell);
 		}
 	}
 }

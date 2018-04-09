@@ -8,13 +8,13 @@ namespace LifeGame
 		private Field field;
 		private int delay = 300;
 		private Generation generation;
-		private Momento momento;
+		private Memento momento;
 
 		public Game(int column, int row, int delay)
 		{
 			field = new Field(column, row);
 			generation = new Generation();
-			momento = new Momento();
+			momento = new Memento();
 			CurrentX = 1;
 			CurrentY = 3;
 			this.delay = delay;
@@ -103,11 +103,11 @@ namespace LifeGame
 			{
 				for (int j = 0; j < field.GetRow(); j++)
 				{
-					if (field.GetCells()[i, j].GetStatus() && Rulles(i, j) != 3 && Rulles(i, j) != 2)
+					if (field.GetCells()[i, j].GetStatus() && Rules(i, j) != 3 && Rules(i, j) != 2)
 					{
 						tempCells[i, j].ChangeStatus();
 					}
-					else if (!field.GetCells()[i, j].GetStatus() && Rulles(i, j) == 3)
+					else if (!field.GetCells()[i, j].GetStatus() && Rules(i, j) == 3)
 					{
 						tempCells[i, j].ChangeStatus();
 					}
@@ -120,7 +120,7 @@ namespace LifeGame
 			Thread.Sleep(delay);
 		}
 
-		private int Rulles(int y, int x)
+		private int Rules(int y, int x)
 		{
 			int check = 0;
 			if (y == 0 && x == 0)
