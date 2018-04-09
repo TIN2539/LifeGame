@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace LifeGame
 {
-	class Program
+	internal class Program
 	{
 		static void Main(string[] args)
 		{
