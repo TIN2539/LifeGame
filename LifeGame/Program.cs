@@ -22,7 +22,6 @@ namespace LifeGame
 				char[] parameter = new char[args.Length];
 				for (int i = 0; i < args.Length; i++)
 				{
-					args[i].ToLower();
 					parameter[i] = args[i].First();
 				}
 				bool correctParameters = true;
