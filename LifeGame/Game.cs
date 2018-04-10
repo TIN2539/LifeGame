@@ -10,20 +10,18 @@ namespace LifeGame
 		private Generation generation;
 		private Memento memento;
 		private const char characterForCursor = 'X';
+		private int currentX;
+		private int currentY;
 
 		public Game(int row, int column, int delay)
 		{
 			field = new Field(row, column);
 			generation = new Generation();
 			memento = new Memento();
-			CurrentX = field.GetLeftMost();	
-			CurrentY = field.GetTopMost();	
+			currentX = field.GetLeftMost();
+			currentY = field.GetTopMost();
 			this.delay = delay;
 		}
-
-		public static int CurrentX { get; set; }
-
-		public static int CurrentY { get; set; }
 
 		public Field GetField()
 		{
@@ -33,25 +31,25 @@ namespace LifeGame
 		public bool IsKeyPressed(ConsoleKey key)
 		{
 			bool isSpacebarPressed = false;
-			if (key == ConsoleKey.RightArrow && CurrentX < field.GetColumn())
+			if (key == ConsoleKey.RightArrow && currentX < field.GetColumn())
 			{
-				Console.SetCursorPosition(CurrentX += 1, CurrentY);
+				Console.SetCursorPosition(currentX += 1, currentY);
 			}
-			else if (key == ConsoleKey.LeftArrow && CurrentX > field.GetLeftMost())		
+			else if (key == ConsoleKey.LeftArrow && currentX > field.GetLeftMost())
 			{
-				Console.SetCursorPosition(CurrentX -= 1, CurrentY);
+				Console.SetCursorPosition(currentX -= 1, currentY);
 			}
-			else if (key == ConsoleKey.DownArrow && CurrentY < field.GetHeight())
+			else if (key == ConsoleKey.DownArrow && currentY < field.GetHeight())
 			{
-				Console.SetCursorPosition(CurrentX, CurrentY += 1);
+				Console.SetCursorPosition(currentX, currentY += 1);
 			}
-			else if (key == ConsoleKey.UpArrow && CurrentY > field.GetTopMost())				
+			else if (key == ConsoleKey.UpArrow && currentY > field.GetTopMost())
 			{
-				Console.SetCursorPosition(CurrentX, CurrentY -= 1);
+				Console.SetCursorPosition(currentX, currentY -= 1);
 			}
 			else if (key == ConsoleKey.Enter)
 			{
-				field.GetCells()[CurrentY - field.GetTopMost(), CurrentX - field.GetLeftMost()].ChangeStatus();
+				field.GetCells()[currentY - field.GetTopMost(), currentX - field.GetLeftMost()].ChangeStatus();
 			}
 			else if (key == ConsoleKey.Spacebar)
 			{
@@ -67,7 +65,7 @@ namespace LifeGame
 		private bool IsGameOver()
 		{
 			bool isGameOver = false;
-			if(AreAllDie() || memento.IsIdenticalCells(field.GetCells()) || memento.HasSameCells(field.GetCells()))
+			if (AreAllDie() || memento.IsIdenticalCells(field.GetCells()) || memento.HasSameCells(field.GetCells()))
 			{
 				isGameOver = true;
 			}
@@ -87,7 +85,7 @@ namespace LifeGame
 						break;
 					}
 				}
-				if(!areAllDie)
+				if (!areAllDie)
 				{
 					break;
 				}
@@ -358,7 +356,7 @@ namespace LifeGame
 		{
 			generation.Paint();
 			field.Update();
-			Console.SetCursorPosition(CurrentX, CurrentY);
+			Console.SetCursorPosition(currentX, currentY);
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.Write(characterForCursor);
 			Console.ResetColor();
