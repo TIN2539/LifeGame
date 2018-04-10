@@ -43,25 +43,35 @@ namespace LifeGame
 				}
 				if (correctParameters)
 				{
+					int resultOfParse;
 					for (int i = 0; i < args.Length; i++)
 					{
 						if (args[i].First() == parameters[0])
 						{
 							args[i] = args[i].Substring(1);
-							row = int.Parse(args[i]);
+							if(int.TryParse(args[i], out resultOfParse))
+							{
+								row = resultOfParse;
+							}
 						}
 						if (args[i].First() == parameters[1])
 						{
 							args[i] = args[i].Substring(1);
-							column = int.Parse(args[i]);
+							if (int.TryParse(args[i], out resultOfParse))
+							{
+								column = resultOfParse;
+							}
 						}
 						if (args[i].First() == parameters[2])
 						{
 							args[i] = args[i].Substring(1);
-							delay = int.Parse(args[i]);
+							if(int.TryParse(args[i], out resultOfParse))
+							{
+								delay = resultOfParse;
+							}
 						}
 					}
-					game = new Game(column, row, delay);
+					game = new Game(row, column, delay);
 				}
 			}
 
