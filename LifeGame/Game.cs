@@ -39,7 +39,7 @@ namespace LifeGame
 			{
 				Console.SetCursorPosition(currentX -= 1, currentY);
 			}
-			else if (key == ConsoleKey.DownArrow && currentY < field.GetHeight())
+			else if (key == ConsoleKey.DownArrow && currentY <= field.GetRow())
 			{
 				Console.SetCursorPosition(currentX, currentY += 1);
 			}

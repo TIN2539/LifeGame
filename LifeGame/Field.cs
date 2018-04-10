@@ -9,7 +9,7 @@ namespace LifeGame
 		private int width;
 		private int height;
 		private const int leftMost = 1;
-		private const int topMost = 3;
+		private const int topMost = 2;
 		private const char characterForFrame = '+';
 		private const char characterForDeadCell = ' ';
 		private const char characterForAliveCell = 'O';
