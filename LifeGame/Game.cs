@@ -9,8 +9,7 @@ namespace LifeGame
 		private int delay;
 		private Generation generation;
 		private Memento momento;
-		readonly static char characterForCursor = 'X';
-
+		private const char characterForCursor = 'X';
 
 		public Game(int row, int column, int delay)
 		{

@@ -8,11 +8,11 @@ namespace LifeGame
 		private int row;
 		private int width;
 		private int height;
-		readonly static int leftMost = 1;
-		readonly static int topMost = 3;
-		readonly static char characterForFrame = '+';
-		readonly static char characterForDeadCell = ' ';
-		readonly static char characterForAliveCell = 'O';
+		private const int leftMost = 1;
+		private const int topMost = 3;
+		private const char characterForFrame = '+';
+		private const char characterForDeadCell = ' ';
+		private const char characterForAliveCell = 'O';
 		private Cell[,] cells;
 
 		public Field(int row, int column)
