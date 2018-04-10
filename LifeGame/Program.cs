@@ -5,13 +5,19 @@ namespace LifeGame
 {
 	internal class Program
 	{
+		private enum Parameters
+		{
+			Width = 'w',
+			Heigth = 'h',
+			Delay = 's'
+		}
+
 		internal static void Main(string[] args)
 		{
 			//Default parameters
-			int row = 10;		
+			int row = 10;
 			int column = 40;
 			int delay = 300;
-			char[] parameters = { 'w', 'h', 's' };      //w - width, h - height, s - delay
 			Game game = null;
 			if (args.Length == 0)
 			{
@@ -19,13 +25,13 @@ namespace LifeGame
 			}
 			else
 			{
-				char[] parameter = new char[args.Length];
+				char[] inputParameters = new char[args.Length];
 				for (int i = 0; i < args.Length; i++)
 				{
-					parameter[i] = args[i].First();
+					inputParameters[i] = args[i].First();
 				}
 				bool correctParameters = true;
-				if (!parameter.Contains(parameters[0]) && parameter.Contains(parameters[1]))
+				if (!inputParameters.Contains((char)Parameters.Width) && inputParameters.Contains((char)Parameters.Heigth))
 				{
 					correctParameters = false;
 					Console.Write("Invalid arguments: ");
@@ -33,7 +39,7 @@ namespace LifeGame
 					Console.WriteLine("Width of the Universe was not specified.");
 					Console.ResetColor();
 				}
-				else if (parameter.Contains(parameters[0]) && !parameter.Contains(parameters[1]))
+				else if (inputParameters.Contains((char)Parameters.Width) && !inputParameters.Contains((char)Parameters.Heigth))
 				{
 					correctParameters = false;
 					Console.Write("Invalid arguments: ");
@@ -44,31 +50,31 @@ namespace LifeGame
 				if (correctParameters)
 				{
 					int resultOfParse;
+					char symbolOfInputParametr;
 					for (int i = 0; i < args.Length; i++)
 					{
-						if (args[i].First() == parameters[0])
+						symbolOfInputParametr = args[i].First();
+						args[i] = args[i].Substring(1);
+						switch (symbolOfInputParametr)
 						{
-							args[i] = args[i].Substring(1);
-							if(int.TryParse(args[i], out resultOfParse))
-							{
-								row = resultOfParse;
-							}
-						}
-						if (args[i].First() == parameters[1])
-						{
-							args[i] = args[i].Substring(1);
-							if (int.TryParse(args[i], out resultOfParse))
-							{
-								column = resultOfParse;
-							}
-						}
-						if (args[i].First() == parameters[2])
-						{
-							args[i] = args[i].Substring(1);
-							if(int.TryParse(args[i], out resultOfParse))
-							{
-								delay = resultOfParse;
-							}
+							case (char)Parameters.Width:
+								if (int.TryParse(args[i], out resultOfParse))
+								{
+									row = resultOfParse;
+								}
+								break;
+							case (char)Parameters.Heigth:
+								if (int.TryParse(args[i], out resultOfParse))
+								{
+									column = resultOfParse;
+								}
+								break;
+								case (char)Parameters.Delay:
+								if (int.TryParse(args[i], out resultOfParse))
+								{
+									delay = resultOfParse;
+								}
+								break;
 						}
 					}
 					game = new Game(row, column, delay);
