@@ -8,22 +8,20 @@ namespace LifeGame
 		private Field field;
 		private int delay;
 		private Generation generation;
-		private Memento momento;
+		private Memento memento;
 		private const char characterForCursor = 'X';
+		private int currentX;
+		private int currentY;
 
 		public Game(int row, int column, int delay)
 		{
 			field = new Field(row, column);
 			generation = new Generation();
-			momento = new Memento();
-			CurrentX = field.GetLeftMost();	
-			CurrentY = field.GetTopMost();	
+			memento = new Memento();
+			currentX = field.GetLeftMost();
+			currentY = field.GetTopMost();
 			this.delay = delay;
 		}
-
-		public static int CurrentX { get; set; }
-
-		public static int CurrentY { get; set; }
 
 		public Field GetField()
 		{
@@ -33,25 +31,25 @@ namespace LifeGame
 		public bool IsKeyPressed(ConsoleKey key)
 		{
 			bool isSpacebarPressed = false;
-			if (key == ConsoleKey.RightArrow && CurrentX < field.GetColumn())
+			if (key == ConsoleKey.RightArrow && currentX < field.GetColumn())
 			{
-				Console.SetCursorPosition(CurrentX += 1, CurrentY);
+				Console.SetCursorPosition(currentX += 1, currentY);
 			}
-			else if (key == ConsoleKey.LeftArrow && CurrentX > field.GetLeftMost())		
+			else if (key == ConsoleKey.LeftArrow && currentX > field.GetLeftMost())
 			{
-				Console.SetCursorPosition(CurrentX -= 1, CurrentY);
+				Console.SetCursorPosition(currentX -= 1, currentY);
 			}
-			else if (key == ConsoleKey.DownArrow && CurrentY < field.GetHeight())
+			else if (key == ConsoleKey.DownArrow && currentY < field.GetHeight())
 			{
-				Console.SetCursorPosition(CurrentX, CurrentY += 1);
+				Console.SetCursorPosition(currentX, currentY += 1);
 			}
-			else if (key == ConsoleKey.UpArrow && CurrentY > field.GetTopMost())				
+			else if (key == ConsoleKey.UpArrow && currentY > field.GetTopMost())
 			{
-				Console.SetCursorPosition(CurrentX, CurrentY -= 1);
+				Console.SetCursorPosition(currentX, currentY -= 1);
 			}
 			else if (key == ConsoleKey.Enter)
 			{
-				field.GetCells()[CurrentY - field.GetTopMost(), CurrentX - field.GetLeftMost()].ChangeStatus();
+				field.GetCells()[currentY - field.GetTopMost(), currentX - field.GetLeftMost()].ChangeStatus();
 			}
 			else if (key == ConsoleKey.Spacebar)
 			{
@@ -67,7 +65,7 @@ namespace LifeGame
 		private bool IsGameOver()
 		{
 			bool isGameOver = false;
-			if(AreAllDie() || momento.IsIdenticalCells(field.GetCells()) || momento.HasSameCells(field.GetCells()))
+			if (AreAllDie() || memento.IsIdenticalCells(field.GetCells()) || memento.HasSameCells(field.GetCells()))
 			{
 				isGameOver = true;
 			}
@@ -87,7 +85,7 @@ namespace LifeGame
 						break;
 					}
 				}
-				if(!areAllDie)
+				if (!areAllDie)
 				{
 					break;
 				}
@@ -98,7 +96,7 @@ namespace LifeGame
 		private void Play()
 		{
 			generation.Paint();
-			momento.Add(field.GetCells());
+			memento.Add(field.GetCells());
 			Cell[,] cellForMakeChanges = new Cell[field.GetRow(), field.GetColumn()];
 			for (int i = 0; i < field.GetRow(); i++)
 			{
@@ -128,49 +126,49 @@ namespace LifeGame
 			Thread.Sleep(delay);
 		}
 
-		private int Rules(int y, int x)
+		private int Rules(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (x == 0 && y == 0)
+			if (y == 0 && x == 0)
 			{
-				countOfAliveCell = CheckLeftTop(y, x);
+				countOfAliveCell = CheckLeftTop(x, y);
 			}
-			else if (x == field.GetColumn() - 1 && y == 0)
+			else if (y == field.GetColumn() - 1 && x == 0)
 			{
-				countOfAliveCell = CheckRightTop(y, x);
+				countOfAliveCell = CheckRightTop(x, y);
 			}
-			else if (x == 0 && y == field.GetRow() - 1)
+			else if (y == 0 && x == field.GetRow() - 1)
 			{
-				countOfAliveCell = CheckLeftBottom(y, x);
+				countOfAliveCell = CheckLeftBottom(x, y);
 			}
-			else if (x == field.GetColumn() - 1 && y == field.GetRow() - 1)
+			else if (y == field.GetColumn() - 1 && x == field.GetRow() - 1)
 			{
-				countOfAliveCell = CheckRightBottom(y, x);
-			}
-			else if (y == 0)
-			{
-				countOfAliveCell = CheckTop(y, x);
+				countOfAliveCell = CheckRightBottom(x, y);
 			}
 			else if (x == 0)
 			{
-				countOfAliveCell = CheckLeft(y, x);
+				countOfAliveCell = CheckTop(x, y);
 			}
-			else if (y == field.GetRow() - 1)
+			else if (y == 0)
 			{
-				countOfAliveCell = CheckBottom(y, x);
+				countOfAliveCell = CheckLeft(x, y);
 			}
-			else if (x == field.GetColumn() - 1)
+			else if (x == field.GetRow() - 1)
 			{
-				countOfAliveCell = CheckRight(y, x);
+				countOfAliveCell = CheckBottom(x, y);
+			}
+			else if (y == field.GetColumn() - 1)
+			{
+				countOfAliveCell = CheckRight(x, y);
 			}
 			else
 			{
-				countOfAliveCell = CheckLeftBottom(y, x) + CheckRightTop(y, x);
-				if (field.GetCells()[y - 1, x - 1].GetIsAlive())
+				countOfAliveCell = CheckLeftBottom(x, y) + CheckRightTop(x, y);
+				if (field.GetCells()[x - 1, y - 1].GetIsAlive())
 				{
 					countOfAliveCell++;
 				}
-				if (field.GetCells()[y + 1, x + 1].GetIsAlive())
+				if (field.GetCells()[x + 1, y + 1].GetIsAlive())
 				{
 					countOfAliveCell++;
 				}
@@ -178,176 +176,176 @@ namespace LifeGame
 			return countOfAliveCell;
 		}
 
-		private int CheckBottom(int y, int x)
+		private int CheckBottom(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (field.GetCells()[y, x + 1].GetIsAlive())
+			if (field.GetCells()[x, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y, x - 1].GetIsAlive())
+			if (field.GetCells()[x, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x - 1].GetIsAlive())
+			if (field.GetCells()[x - 1, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x + 1].GetIsAlive())
+			if (field.GetCells()[x - 1, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x].GetIsAlive())
+			if (field.GetCells()[x - 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
 			return countOfAliveCell;
 		}
 
-		private int CheckRight(int y, int x)
+		private int CheckRight(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (field.GetCells()[y + 1, x].GetIsAlive())
+			if (field.GetCells()[x + 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x].GetIsAlive())
+			if (field.GetCells()[x - 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x - 1].GetIsAlive())
+			if (field.GetCells()[x - 1, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y + 1, x - 1].GetIsAlive())
+			if (field.GetCells()[x + 1, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y, x - 1].GetIsAlive())
+			if (field.GetCells()[x, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
 			return countOfAliveCell;
 		}
 
-		private int CheckTop(int y, int x)
+		private int CheckTop(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (field.GetCells()[y, x + 1].GetIsAlive())
+			if (field.GetCells()[x, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y, x - 1].GetIsAlive())
+			if (field.GetCells()[x, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y + 1, x + 1].GetIsAlive())
+			if (field.GetCells()[x + 1, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y + 1, x - 1].GetIsAlive())
+			if (field.GetCells()[x + 1, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y + 1, x].GetIsAlive())
+			if (field.GetCells()[x + 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
 			return countOfAliveCell;
 		}
 
-		private int CheckLeft(int y, int x)
+		private int CheckLeft(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (field.GetCells()[y + 1, x].GetIsAlive())
+			if (field.GetCells()[x + 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x].GetIsAlive())
+			if (field.GetCells()[x - 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y, x + 1].GetIsAlive())
+			if (field.GetCells()[x, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y + 1, x + 1].GetIsAlive())
+			if (field.GetCells()[x + 1, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x + 1].GetIsAlive())
+			if (field.GetCells()[x - 1, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
 			return countOfAliveCell;
 		}
 
-		private int CheckRightBottom(int y, int x)
+		private int CheckRightBottom(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (field.GetCells()[y - 1, x].GetIsAlive())
+			if (field.GetCells()[x - 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x - 1].GetIsAlive())
+			if (field.GetCells()[x - 1, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y, x - 1].GetIsAlive())
+			if (field.GetCells()[x, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
 			return countOfAliveCell;
 		}
 
-		private int CheckRightTop(int y, int x)
+		private int CheckRightTop(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (field.GetCells()[y + 1, x].GetIsAlive())
+			if (field.GetCells()[x + 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y + 1, x - 1].GetIsAlive())
+			if (field.GetCells()[x + 1, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y, x - 1].GetIsAlive())
+			if (field.GetCells()[x, y - 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
 			return countOfAliveCell;
 		}
 
-		private int CheckLeftBottom(int y, int x)
+		private int CheckLeftBottom(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (field.GetCells()[y, x + 1].GetIsAlive())
+			if (field.GetCells()[x, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x].GetIsAlive())
+			if (field.GetCells()[x - 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y - 1, x + 1].GetIsAlive())
+			if (field.GetCells()[x - 1, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
 			return countOfAliveCell;
 		}
 
-		private int CheckLeftTop(int y, int x)
+		private int CheckLeftTop(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			if (field.GetCells()[y + 1, x].GetIsAlive())
+			if (field.GetCells()[x + 1, y].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y, x + 1].GetIsAlive())
+			if (field.GetCells()[x, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
-			if (field.GetCells()[y + 1, x + 1].GetIsAlive())
+			if (field.GetCells()[x + 1, y + 1].GetIsAlive())
 			{
 				countOfAliveCell++;
 			}
@@ -358,7 +356,7 @@ namespace LifeGame
 		{
 			generation.Paint();
 			field.Update();
-			Console.SetCursorPosition(CurrentX, CurrentY);
+			Console.SetCursorPosition(currentX, currentY);
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.Write(characterForCursor);
 			Console.ResetColor();
