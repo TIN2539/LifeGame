@@ -33,19 +33,19 @@ namespace LifeGame
 			bool isSpacebarPressed = false;
 			if (key == ConsoleKey.RightArrow && currentX < field.GetColumn())
 			{
-				Console.SetCursorPosition(currentX += 1, currentY);
+				Console.SetCursorPosition(IncrementX(), currentY);
 			}
 			else if (key == ConsoleKey.LeftArrow && currentX > field.GetLeftMost())
 			{
-				Console.SetCursorPosition(currentX -= 1, currentY);
+				Console.SetCursorPosition(DecrementX(), currentY);
 			}
 			else if (key == ConsoleKey.DownArrow && currentY <= field.GetRow())
 			{
-				Console.SetCursorPosition(currentX, currentY += 1);
+				Console.SetCursorPosition(currentX, IncrementY());
 			}
 			else if (key == ConsoleKey.UpArrow && currentY > field.GetTopMost())
 			{
-				Console.SetCursorPosition(currentX, currentY -= 1);
+				Console.SetCursorPosition(currentX, DecrementY());
 			}
 			else if (key == ConsoleKey.Enter)
 			{
@@ -60,6 +60,26 @@ namespace LifeGame
 				isSpacebarPressed = true;
 			}
 			return isSpacebarPressed;
+		}
+
+		private int IncrementX()
+		{
+			return ++currentX;
+		}
+
+		private int DecrementX()
+		{
+			return --currentX;
+		}
+
+		private int IncrementY()
+		{
+			return ++currentY;
+		}
+
+		private int DecrementY()
+		{
+			return --currentY;
 		}
 
 		private bool IsGameOver()
