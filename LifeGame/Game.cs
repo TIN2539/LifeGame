@@ -8,14 +8,14 @@ namespace LifeGame
 		private Field field;
 		private int delay;
 		private Generation generation;
-		private Memento momento;
+		private Memento memento;
 		private const char characterForCursor = 'X';
 
 		public Game(int row, int column, int delay)
 		{
 			field = new Field(row, column);
 			generation = new Generation();
-			momento = new Memento();
+			memento = new Memento();
 			CurrentX = field.GetLeftMost();	
 			CurrentY = field.GetTopMost();	
 			this.delay = delay;
@@ -67,7 +67,7 @@ namespace LifeGame
 		private bool IsGameOver()
 		{
 			bool isGameOver = false;
-			if(AreAllDie() || momento.IsIdenticalCells(field.GetCells()) || momento.HasSameCells(field.GetCells()))
+			if(AreAllDie() || memento.IsIdenticalCells(field.GetCells()) || memento.HasSameCells(field.GetCells()))
 			{
 				isGameOver = true;
 			}
@@ -98,7 +98,7 @@ namespace LifeGame
 		private void Play()
 		{
 			generation.Paint();
-			momento.Add(field.GetCells());
+			memento.Add(field.GetCells());
 			Cell[,] cellForMakeChanges = new Cell[field.GetRow(), field.GetColumn()];
 			for (int i = 0; i < field.GetRow(); i++)
 			{
