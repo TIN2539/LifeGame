@@ -25,10 +25,14 @@ namespace LifeGame
 			}
 			else
 			{
+				int resultOfParse;
 				char[] inputParameters = new char[args.Length];
 				for (int i = 0; i < args.Length; i++)
 				{
-					inputParameters[i] = args[i].First();
+					if(int.TryParse( args[i].Substring(1), out resultOfParse))
+					{
+						inputParameters[i] = args[i].First();
+					}
 				}
 				bool correctParameters = true;
 				if (!inputParameters.Contains((char)Parameters.Width) && inputParameters.Contains((char)Parameters.Heigth))
@@ -49,7 +53,6 @@ namespace LifeGame
 				}
 				if (correctParameters)
 				{
-					int resultOfParse;
 					char symbolOfInputParametr;
 					for (int i = 0; i < args.Length; i++)
 					{
