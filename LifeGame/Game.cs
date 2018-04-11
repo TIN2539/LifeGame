@@ -21,11 +21,11 @@ namespace LifeGame
 			generation = new Generation();
 			memento = new Memento();
 			commands = new List<ICommand>();
-			commands.Add(new RightCommand(field.GetColumn()));
-			commands.Add(new LeftCommand(field.GetLeftMost()));
-			commands.Add(new UpCommand(field.GetTopMost()));
-			commands.Add(new DownCommand(field.GetRow()));
-			commands.Add(new EnterCommand(field));
+			commands.Add(new RightCommand(this));
+			commands.Add(new LeftCommand(this));
+			commands.Add(new UpCommand(this));
+			commands.Add(new DownCommand(this));
+			commands.Add(new EnterCommand(this));
 			commands.Add(new SpacebarCommand(this));
 			currentX = field.GetLeftMost();
 			currentY = field.GetTopMost();
@@ -44,29 +44,29 @@ namespace LifeGame
 			{
 				if(command.CanExecute(key))
 				{
-					isSpacebarPressed = command.Execute(ref currentX, ref currentY);
+					isSpacebarPressed = command.Execute();
 					break;
 				}
 			}
 			return isSpacebarPressed;
 		}
 
-		private int IncrementX()
+		public int IncrementX()
 		{
 			return ++currentX;
 		}
 
-		private int DecrementX()
+		public int DecrementX()
 		{
 			return --currentX;
 		}
 
-		private int IncrementY()
+		public int IncrementY()
 		{
 			return ++currentY;
 		}
 
-		private int DecrementY()
+		public int DecrementY()
 		{
 			return --currentY;
 		}
@@ -164,6 +164,16 @@ namespace LifeGame
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.Write(characterForCursor);
 			Console.ResetColor();
+		}
+
+		public int GetCurrentX()
+		{
+			return currentX;
+		}
+
+		public int GetCurrentY()
+		{
+			return currentY;
 		}
 	}
 }

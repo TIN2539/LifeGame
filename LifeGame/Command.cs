@@ -4,7 +4,7 @@ namespace LifeGame
 {
 	internal abstract class ICommand
 	{
-		public abstract bool Execute(ref int currentX, ref int currentY);
+		public abstract bool Execute();
 
 		public abstract bool CanExecute(ConsoleKey key);
 	}
@@ -23,12 +23,7 @@ namespace LifeGame
 			return this.key == key;
 		}
 
-		public override bool Execute(ref int currentX, ref int currentY)
-		{
-			throw new NotImplementedException();
-		}
-
-		public bool Execute()
+		public override bool Execute()
 		{
 			return this.key == ConsoleKey.Spacebar;
 		}
@@ -36,18 +31,18 @@ namespace LifeGame
 
 	internal class RightCommand : Command
 	{
-		private int column;
-		public RightCommand(int column) : base(ConsoleKey.RightArrow)
+		private Game game;
+
+		public RightCommand(Game game) : base(ConsoleKey.RightArrow)
 		{
-			this.column = column;
+			this.game = game;
 		}
 
-		public override bool Execute(ref int currentX, ref int currentY)
+		public override bool Execute()
 		{
-			if (currentX < column)
+			if (game.GetCurrentX() < game.GetField().GetColumn())
 			{
-				++currentX;
-				Console.SetCursorPosition(currentX, currentY);
+				Console.SetCursorPosition(game.IncrementX(), game.GetCurrentY());
 			}
 			return base.Execute();
 		}
@@ -55,18 +50,18 @@ namespace LifeGame
 
 	internal class LeftCommand : Command
 	{
-		private int leftMost;
-		public LeftCommand(int leftMost) : base(ConsoleKey.LeftArrow)
+		private Game game;
+
+		public LeftCommand(Game game) : base(ConsoleKey.LeftArrow)
 		{
-			this.leftMost = leftMost;
+			this.game = game;
 		}
 
-		public override bool Execute(ref int currentX, ref int currentY)
+		public override bool Execute()
 		{
-			if (currentX > leftMost)
+			if (game.GetCurrentX() > game.GetField().GetLeftMost())
 			{
-				--currentX;
-				Console.SetCursorPosition(currentX, currentY);
+				Console.SetCursorPosition(game.DecrementX(), game.GetCurrentY());
 			}
 			return base.Execute();
 		}
@@ -74,18 +69,18 @@ namespace LifeGame
 
 	internal class UpCommand : Command
 	{
-		private int topMost;
-		public UpCommand(int topMost) : base(ConsoleKey.UpArrow)
+		private Game game;
+
+		public UpCommand(Game game) : base(ConsoleKey.UpArrow)
 		{
-			this.topMost = topMost;
+			this.game = game;
 		}
 
-		public override bool Execute(ref int currentX, ref int currentY)
+		public override bool Execute()
 		{
-			if (currentY > topMost)
+			if (game.GetCurrentY() > game.GetField().GetTopMost())
 			{
-				--currentY;
-				Console.SetCursorPosition(currentX, currentY);
+				Console.SetCursorPosition(game.GetCurrentX(), game.DecrementY());
 			}
 			return base.Execute();
 		}
@@ -93,18 +88,18 @@ namespace LifeGame
 
 	internal class DownCommand : Command
 	{
-		private int row;
-		public DownCommand(int row) : base(ConsoleKey.DownArrow)
+		private Game game;
+
+		public DownCommand(Game game) : base(ConsoleKey.DownArrow)
 		{
-			this.row = row;
+			this.game = game;
 		}
 
-		public override bool Execute(ref int currentX, ref int currentY)
+		public override bool Execute()
 		{
-			if (currentY <= row)
+			if (game.GetCurrentY() <= game.GetField().GetRow())
 			{
-				++currentY;
-				Console.SetCursorPosition(currentX, currentY);
+				Console.SetCursorPosition(game.GetCurrentX(), game.IncrementY());
 			}
 			return base.Execute();
 		}
@@ -112,16 +107,16 @@ namespace LifeGame
 
 	internal class EnterCommand : Command
 	{
-		private Field field;
+		private Game game;
 
-		public EnterCommand(Field field) : base(ConsoleKey.Enter)
+		public EnterCommand(Game game) : base(ConsoleKey.Enter)
 		{
-			this.field = field;
+			this.game = game;
 		}
 
-		public override bool Execute(ref int currentX, ref int currentY)
+		public override bool Execute()
 		{
-			field.GetCells()[currentY - field.GetTopMost(), currentX - field.GetLeftMost()].ChangeStatus();
+			game.GetField().GetCells()[game.GetCurrentY() - game.GetField().GetTopMost(), game.GetCurrentX() - game.GetField().GetLeftMost()].ChangeStatus();
 			return base.Execute();
 		}
 	}
@@ -135,7 +130,7 @@ namespace LifeGame
 			this.game = game;
 		}
 
-		public override bool Execute(ref int currentX, ref int currentY)
+		public override bool Execute()
 		{
 			do
 			{
@@ -144,5 +139,4 @@ namespace LifeGame
 			return base.Execute();
 		}
 	}
-
 }
