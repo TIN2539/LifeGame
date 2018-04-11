@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace LifeGame
@@ -9,6 +10,7 @@ namespace LifeGame
 		private int delay;
 		private Generation generation;
 		private Memento memento;
+		private List<ICommand> commands;
 		private const char characterForCursor = 'X';
 		private int currentX;
 		private int currentY;
@@ -18,6 +20,13 @@ namespace LifeGame
 			field = new Field(row, column);
 			generation = new Generation();
 			memento = new Memento();
+			commands = new List<ICommand>();
+			commands.Add(new RightCommand(field.GetColumn()));
+			commands.Add(new LeftCommand(field.GetLeftMost()));
+			commands.Add(new UpCommand(field.GetTopMost()));
+			commands.Add(new DownCommand(field.GetRow()));
+			commands.Add(new EnterCommand(field));
+			commands.Add(new SpacebarCommand(this));
 			currentX = field.GetLeftMost();
 			currentY = field.GetTopMost();
 			this.delay = delay;
@@ -31,33 +40,13 @@ namespace LifeGame
 		public bool IsKeyPressed(ConsoleKey key)
 		{
 			bool isSpacebarPressed = false;
-			if (key == ConsoleKey.RightArrow && currentX < field.GetColumn())
+			foreach(ICommand command in commands)
 			{
-				Console.SetCursorPosition(IncrementX(), currentY);
-			}
-			else if (key == ConsoleKey.LeftArrow && currentX > field.GetLeftMost())
-			{
-				Console.SetCursorPosition(DecrementX(), currentY);
-			}
-			else if (key == ConsoleKey.DownArrow && currentY <= field.GetRow())
-			{
-				Console.SetCursorPosition(currentX, IncrementY());
-			}
-			else if (key == ConsoleKey.UpArrow && currentY > field.GetTopMost())
-			{
-				Console.SetCursorPosition(currentX, DecrementY());
-			}
-			else if (key == ConsoleKey.Enter)
-			{
-				field.GetCells()[currentY - field.GetTopMost(), currentX - field.GetLeftMost()].ChangeStatus();
-			}
-			else if (key == ConsoleKey.Spacebar)
-			{
-				do
+				if(command.CanExecute(key))
 				{
-					Play();
-				} while (!IsGameOver());
-				isSpacebarPressed = true;
+					isSpacebarPressed = command.Execute(ref currentX, ref currentY);
+					break;
+				}
 			}
 			return isSpacebarPressed;
 		}
@@ -82,7 +71,7 @@ namespace LifeGame
 			return --currentY;
 		}
 
-		private bool IsGameOver()
+		public bool IsGameOver()
 		{
 			bool isGameOver = false;
 			if (AreAllDie() || memento.IsIdenticalCells(field.GetCells()) || memento.HasSameCells(field.GetCells()))
@@ -113,7 +102,7 @@ namespace LifeGame
 			return areAllDie;
 		}
 
-		private void Play()
+		public void Play()
 		{
 			generation.Paint();
 			memento.Add(field.GetCells());
