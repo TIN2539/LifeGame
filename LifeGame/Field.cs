@@ -4,16 +4,17 @@ namespace LifeGame
 {
 	internal class Field
 	{
-		private int column;
-		private int row;
-		private int width;
-		private int height;
+		private const char characterForAliveCell = 'O';
+		private const char characterForDeadCell = ' ';
+		private const char characterForFrame = '+';
 		private const int leftMost = 1;
 		private const int topMost = 2;
-		private const char characterForFrame = '+';
-		private const char characterForDeadCell = ' ';
-		private const char characterForAliveCell = 'O';
+
 		private Cell[,] cells;
+		private int column;
+		private int height;
+		private int row;
+		private int width;
 
 		public Field(int row, int column)
 		{
@@ -29,6 +30,41 @@ namespace LifeGame
 					cells[i, j] = new Cell();
 				}
 			}
+		}
+
+		public Cell[,] GetCells()
+		{
+			return cells;
+		}
+
+		public int GetColumn()
+		{
+			return column;
+		}
+
+		public int GetHeight()
+		{
+			return height;
+		}
+
+		public int GetLeftMost()
+		{
+			return leftMost;
+		}
+
+		public int GetRow()
+		{
+			return row;
+		}
+
+		public int GetTopMost()
+		{
+			return topMost;
+		}
+
+		public int GetWidth()
+		{
+			return width;
 		}
 
 		public void Paint()
@@ -73,41 +109,6 @@ namespace LifeGame
 				}
 				Console.SetCursorPosition(leftMost, topMost + i + 1);       //+1 - перемещение курсора на 1 строку вниз
 			}
-		}
-
-		public int GetRow()
-		{
-			return row;
-		}
-
-		public int GetColumn()
-		{
-			return column;
-		}
-
-		public int GetWidth()
-		{
-			return width;
-		}
-
-		public int GetHeight()
-		{
-			return height;
-		}
-
-		public int GetLeftMost()
-		{
-			return leftMost;
-		}
-
-		public int GetTopMost()
-		{
-			return topMost;
-		}
-
-		public Cell[,] GetCells()
-		{
-			return cells;
 		}
 
 		internal void SetCell(Cell[,] cells)

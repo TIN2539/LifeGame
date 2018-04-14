@@ -6,14 +6,15 @@ namespace LifeGame
 {
 	internal class Game
 	{
-		private Field field;
-		private int delay;
-		private Generation generation;
-		private Memento memento;
-		private List<ICommand> commands;
 		private const char characterForCursor = 'X';
+
+		private List<ICommand> commands;
 		private int currentX;
 		private int currentY;
+		private int delay;
+		private Field field;
+		private Generation generation;
+		private Memento memento;
 
 		public Game(int row, int column, int delay)
 		{
@@ -32,56 +33,7 @@ namespace LifeGame
 			this.delay = delay;
 		}
 
-		public Field GetField()
-		{
-			return field;
-		}
-
-		public bool IsKeyPressed(ConsoleKey key)
-		{
-			bool isSpacebarPressed = false;
-			foreach(ICommand command in commands)
-			{
-				if(command.CanExecute(key))
-				{
-					isSpacebarPressed = command.Execute();
-					break;
-				}
-			}
-			return isSpacebarPressed;
-		}
-
-		public int IncrementX()
-		{
-			return ++currentX;
-		}
-
-		public int DecrementX()
-		{
-			return --currentX;
-		}
-
-		public int IncrementY()
-		{
-			return ++currentY;
-		}
-
-		public int DecrementY()
-		{
-			return --currentY;
-		}
-
-		public bool IsGameOver()
-		{
-			bool isGameOver = false;
-			if (AreAllDie() || memento.IsIdenticalCells(field.GetCells()) || memento.HasSameCells(field.GetCells()))
-			{
-				isGameOver = true;
-			}
-			return isGameOver;
-		}
-
-		private bool AreAllDie()
+		public bool AreAllDie()
 		{
 			bool areAllDie = true;
 			for (int i = 0; i < field.GetRow(); i++)
@@ -100,6 +52,65 @@ namespace LifeGame
 				}
 			}
 			return areAllDie;
+		}
+
+		public int DecrementX()
+		{
+			return --currentX;
+		}
+
+		public int DecrementY()
+		{
+			return --currentY;
+		}
+
+		public int GetCurrentX()
+		{
+			return currentX;
+		}
+
+		public int GetCurrentY()
+		{
+			return currentY;
+		}
+
+		public Field GetField()
+		{
+			return field;
+		}
+
+		public int IncrementX()
+		{
+			return ++currentX;
+		}
+
+		public int IncrementY()
+		{
+			return ++currentY;
+		}
+
+		public bool IsGameOver()
+		{
+			bool isGameOver = false;
+			if (AreAllDie() || memento.IsIdenticalCells(field.GetCells()) || memento.HasSameCells(field.GetCells()))
+			{
+				isGameOver = true;
+			}
+			return isGameOver;
+		}
+
+		public bool IsKeyPressed(ConsoleKey key)
+		{
+			bool isSpacebarPressed = false;
+			foreach (ICommand command in commands)
+			{
+				if (command.CanExecute(key))
+				{
+					isSpacebarPressed = command.Execute();
+					break;
+				}
+			}
+			return isSpacebarPressed;
 		}
 
 		public void Play()
@@ -135,10 +146,10 @@ namespace LifeGame
 			Thread.Sleep(delay);
 		}
 
-		private int Rules(int x, int y)
+		public int Rules(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			for (int i = -1; i <= 1; i++)		//-1...1 -- для перемещения от текущей ячейки вокруг нее
+			for (int i = -1; i <= 1; i++)       //-1...1 -- для перемещения от текущей ячейки вокруг нее
 			{
 				for (int j = -1; j <= 1; j++)
 				{
@@ -164,16 +175,6 @@ namespace LifeGame
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.Write(characterForCursor);
 			Console.ResetColor();
-		}
-
-		public int GetCurrentX()
-		{
-			return currentX;
-		}
-
-		public int GetCurrentY()
-		{
-			return currentY;
 		}
 	}
 }

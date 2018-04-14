@@ -11,6 +11,19 @@ namespace LifeGame
 			memento = new List<Cell[,]> { };
 		}
 
+		internal void Add(Cell[,] cell)
+		{
+			Cell[,] cellOfCurrentField = new Cell[cell.GetLength(0), cell.GetLength(1)];
+			for (int i = 0; i < cellOfCurrentField.GetLength(0); i++)
+			{
+				for (int j = 0; j < cellOfCurrentField.GetLength(1); j++)
+				{
+					cellOfCurrentField[i, j] = new Cell(cell[i, j].GetIsAlive());
+				}
+			}
+			memento.Add(cellOfCurrentField);
+		}
+
 		public bool HasSameCells(Cell[,] currentCell)
 		{
 			bool hasSameCells = false;
@@ -62,19 +75,6 @@ namespace LifeGame
 				}
 			}
 			return isAdenticalCells;
-		}
-
-		internal void Add(Cell[,] cell)
-		{
-			Cell[,] cellOfCurrentField = new Cell[cell.GetLength(0), cell.GetLength(1)];
-			for (int i = 0; i < cellOfCurrentField.GetLength(0); i++)
-			{
-				for (int j = 0; j < cellOfCurrentField.GetLength(1); j++)
-				{
-					cellOfCurrentField[i, j] = new Cell(cell[i, j].GetIsAlive());
-				}
-			}
-			memento.Add(cellOfCurrentField);
 		}
 	}
 }

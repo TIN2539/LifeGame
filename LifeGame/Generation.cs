@@ -6,11 +6,6 @@ namespace LifeGame
 	{
 		private int generationNumber = 0;
 
-		public void Update()
-		{
-			generationNumber++;
-		}
-
 		public void Paint()
 		{
 			Console.SetCursorPosition(0, 0);
@@ -18,6 +13,11 @@ namespace LifeGame
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine(generationNumber);
 			Console.ResetColor();
+		}
+
+		public void Update()
+		{
+			generationNumber++;
 		}
 	}
 }

@@ -4,9 +4,9 @@ namespace LifeGame
 {
 	internal abstract class ICommand
 	{
-		public abstract bool Execute();
-
 		public abstract bool CanExecute(ConsoleKey key);
+
+		public abstract bool Execute();
 	}
 
 	internal class Command : ICommand
@@ -26,63 +26,6 @@ namespace LifeGame
 		public override bool Execute()
 		{
 			return this.key == ConsoleKey.Spacebar;
-		}
-	}
-
-	internal class RightCommand : Command
-	{
-		private Game game;
-
-		public RightCommand(Game game) : base(ConsoleKey.RightArrow)
-		{
-			this.game = game;
-		}
-
-		public override bool Execute()
-		{
-			if (game.GetCurrentX() < game.GetField().GetColumn())
-			{
-				Console.SetCursorPosition(game.IncrementX(), game.GetCurrentY());
-			}
-			return base.Execute();
-		}
-	}
-
-	internal class LeftCommand : Command
-	{
-		private Game game;
-
-		public LeftCommand(Game game) : base(ConsoleKey.LeftArrow)
-		{
-			this.game = game;
-		}
-
-		public override bool Execute()
-		{
-			if (game.GetCurrentX() > game.GetField().GetLeftMost())
-			{
-				Console.SetCursorPosition(game.DecrementX(), game.GetCurrentY());
-			}
-			return base.Execute();
-		}
-	}
-
-	internal class UpCommand : Command
-	{
-		private Game game;
-
-		public UpCommand(Game game) : base(ConsoleKey.UpArrow)
-		{
-			this.game = game;
-		}
-
-		public override bool Execute()
-		{
-			if (game.GetCurrentY() > game.GetField().GetTopMost())
-			{
-				Console.SetCursorPosition(game.GetCurrentX(), game.DecrementY());
-			}
-			return base.Execute();
 		}
 	}
 
@@ -121,6 +64,44 @@ namespace LifeGame
 		}
 	}
 
+	internal class LeftCommand : Command
+	{
+		private Game game;
+
+		public LeftCommand(Game game) : base(ConsoleKey.LeftArrow)
+		{
+			this.game = game;
+		}
+
+		public override bool Execute()
+		{
+			if (game.GetCurrentX() > game.GetField().GetLeftMost())
+			{
+				Console.SetCursorPosition(game.DecrementX(), game.GetCurrentY());
+			}
+			return base.Execute();
+		}
+	}
+
+	internal class RightCommand : Command
+	{
+		private Game game;
+
+		public RightCommand(Game game) : base(ConsoleKey.RightArrow)
+		{
+			this.game = game;
+		}
+
+		public override bool Execute()
+		{
+			if (game.GetCurrentX() < game.GetField().GetColumn())
+			{
+				Console.SetCursorPosition(game.IncrementX(), game.GetCurrentY());
+			}
+			return base.Execute();
+		}
+	}
+
 	internal class SpacebarCommand : Command
 	{
 		private Game game;
@@ -139,4 +120,25 @@ namespace LifeGame
 			return base.Execute();
 		}
 	}
+
+	internal class UpCommand : Command
+	{
+		private Game game;
+
+		public UpCommand(Game game) : base(ConsoleKey.UpArrow)
+		{
+			this.game = game;
+		}
+
+		public override bool Execute()
+		{
+			if (game.GetCurrentY() > game.GetField().GetTopMost())
+			{
+				Console.SetCursorPosition(game.GetCurrentX(), game.DecrementY());
+			}
+			return base.Execute();
+		}
+	}
+
+
 }
