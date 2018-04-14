@@ -22,7 +22,7 @@ namespace LifeGame
 				char[] inputParameters = new char[parametersFromConsole.Length];
 				for (int i = 0; i < parametersFromConsole.Length; i++)
 				{
-					if(int.TryParse( parametersFromConsole[i].Substring(1), out resultOfParse))
+					if (int.TryParse(parametersFromConsole[i].Substring(1), out resultOfParse))
 					{
 						inputParameters[i] = parametersFromConsole[i].First();
 					}
@@ -65,7 +65,7 @@ namespace LifeGame
 									column = resultOfParse;
 								}
 								break;
-								case (char)Parameters.Delay:
+							case (char)Parameters.Delay:
 								if (int.TryParse(parametersFromConsole[i], out resultOfParse))
 								{
 									delay = resultOfParse;
