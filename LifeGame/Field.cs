@@ -20,8 +20,8 @@ namespace LifeGame
 		{
 			this.column = column;
 			this.row = row;
-			width = column + 2;     //+2 - поправка с учетом наличия нижней и верхней границ поля
-			height = row + 2;       //+2 - поправка с учетом наличия левой и правой границ поля
+			width = column + 2; // +2 - поправка с учетом наличия нижней и верхней границ поля
+			height = row + 2; // +2 - поправка с учетом наличия левой и правой границ поля
 			cells = new Cell[row, column];
 			for (int i = 0; i < row; i++)
 			{
@@ -71,7 +71,7 @@ namespace LifeGame
 		{
 			Console.CursorVisible = false;
 
-			Console.SetCursorPosition(leftMost - 1, topMost - 1);       //-1 -- сдвинуть курсор за пределы игрового поля для рисовки рамки
+			Console.SetCursorPosition(leftMost - 1, topMost - 1); // -1 -- сдвинуть курсор за пределы игрового поля для рисовки рамки
 			for (int i = 0; i < height; i++)
 			{
 				for (int j = 0; j < width; j++)
@@ -107,7 +107,7 @@ namespace LifeGame
 						Console.Write(characterForDeadCell);
 					}
 				}
-				Console.SetCursorPosition(leftMost, topMost + i + 1);       //+1 - перемещение курсора на 1 строку вниз
+				Console.SetCursorPosition(leftMost, topMost + i + 1); // +1 - перемещение курсора на 1 строку вниз
 			}
 		}
 

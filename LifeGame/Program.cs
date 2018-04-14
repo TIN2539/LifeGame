@@ -14,7 +14,7 @@ namespace LifeGame
 
 		internal static void Main(string[] args)
 		{
-			//Default parameters
+			// Default parameters
 			int row = 10;
 			int column = 40;
 			int delay = 300;

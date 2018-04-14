@@ -129,11 +129,11 @@ namespace LifeGame
 			{
 				for (int j = 0; j < field.GetColumn(); j++)
 				{
-					if (field.GetCells()[i, j].GetIsAlive() && Rules(i, j) != 3 && Rules(i, j) != 2)     //Rules(i, j) != 3 && Rules(i, j) != 2  -- вокруг живой ячейки нету 3 или 2 живых ячеек
+					if (field.GetCells()[i, j].GetIsAlive() && Rules(i, j) != 3 && Rules(i, j) != 2) // Rules(i, j) != 3 && Rules(i, j) != 2  -- вокруг живой ячейки нету 3 или 2 живых ячеек
 					{
 						cellForMakeChanges[i, j].ChangeStatus();
 					}
-					else if (!field.GetCells()[i, j].GetIsAlive() && Rules(i, j) == 3)       //Rules(i, j) == 3 -- вокруг мертвой ячейки ровно 3 живие ячейки
+					else if (!field.GetCells()[i, j].GetIsAlive() && Rules(i, j) == 3) // Rules(i, j) == 3 -- вокруг мертвой ячейки ровно 3 живие ячейки
 					{
 						cellForMakeChanges[i, j].ChangeStatus();
 					}
@@ -149,7 +149,7 @@ namespace LifeGame
 		public int Rules(int x, int y)
 		{
 			int countOfAliveCell = 0;
-			for (int i = -1; i <= 1; i++)       //-1...1 -- для перемещения от текущей ячейки вокруг нее
+			for (int i = -1; i <= 1; i++) // -1...1 -- для перемещения от текущей ячейки вокруг нее
 			{
 				for (int j = -1; j <= 1; j++)
 				{
