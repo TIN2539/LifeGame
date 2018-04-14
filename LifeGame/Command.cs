@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LifeGame
 {
@@ -22,8 +18,7 @@ namespace LifeGame
 
 		public override bool Execute()
 		{
-			return this.key == ConsoleKey.Spacebar;
+			return key == ConsoleKey.Spacebar;
 		}
 	}
-
 }
