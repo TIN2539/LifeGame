@@ -5,26 +5,26 @@ namespace LifeGame
 {
 	internal class Program
 	{
-		internal static void Main(string[] args)
+		internal static void Main(string[] parametersFromConsole)
 		{
 			// Default parameters
 			int row = 10;
 			int column = 40;
 			int delay = 300;
 			Game game = null;
-			if (args.Length == 0)
+			if (parametersFromConsole.Length == 0)
 			{
 				game = new Game(row, column, delay);
 			}
 			else
 			{
 				int resultOfParse;
-				char[] inputParameters = new char[args.Length];
-				for (int i = 0; i < args.Length; i++)
+				char[] inputParameters = new char[parametersFromConsole.Length];
+				for (int i = 0; i < parametersFromConsole.Length; i++)
 				{
-					if(int.TryParse( args[i].Substring(1), out resultOfParse))
+					if(int.TryParse( parametersFromConsole[i].Substring(1), out resultOfParse))
 					{
-						inputParameters[i] = args[i].First();
+						inputParameters[i] = parametersFromConsole[i].First();
 					}
 				}
 				bool correctParameters = true;
@@ -47,26 +47,26 @@ namespace LifeGame
 				if (correctParameters)
 				{
 					char symbolOfInputParametr;
-					for (int i = 0; i < args.Length; i++)
+					for (int i = 0; i < parametersFromConsole.Length; i++)
 					{
-						symbolOfInputParametr = args[i].First();
-						args[i] = args[i].Substring(1);
+						symbolOfInputParametr = parametersFromConsole[i].First();
+						parametersFromConsole[i] = parametersFromConsole[i].Substring(1);
 						switch (symbolOfInputParametr)
 						{
 							case (char)Parameters.Width:
-								if (int.TryParse(args[i], out resultOfParse))
+								if (int.TryParse(parametersFromConsole[i], out resultOfParse))
 								{
 									row = resultOfParse;
 								}
 								break;
 							case (char)Parameters.Heigth:
-								if (int.TryParse(args[i], out resultOfParse))
+								if (int.TryParse(parametersFromConsole[i], out resultOfParse))
 								{
 									column = resultOfParse;
 								}
 								break;
 								case (char)Parameters.Delay:
-								if (int.TryParse(args[i], out resultOfParse))
+								if (int.TryParse(parametersFromConsole[i], out resultOfParse))
 								{
 									delay = resultOfParse;
 								}
