@@ -5,13 +5,6 @@ namespace LifeGame
 {
 	internal class Program
 	{
-		private enum Parameters
-		{
-			Width = 'w',
-			Heigth = 'h',
-			Delay = 's'
-		}
-
 		internal static void Main(string[] args)
 		{
 			// Default parameters

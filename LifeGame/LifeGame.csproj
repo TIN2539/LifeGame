@@ -44,12 +44,20 @@
   <ItemGroup>
     <Compile Include="Cell.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="DownCommand.cs" />
+    <Compile Include="EnterCommand.cs" />
+    <Compile Include="ICommand.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Generation.cs" />
+    <Compile Include="LeftCommand.cs" />
     <Compile Include="Memento.cs" />
+    <Compile Include="Parameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RightCommand.cs" />
+    <Compile Include="SpacebarCommand.cs" />
+    <Compile Include="UpCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
