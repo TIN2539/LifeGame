@@ -52,6 +52,7 @@
     <Compile Include="Generation.cs" />
     <Compile Include="LeftCommand.cs" />
     <Compile Include="Memento.cs" />
+    <Compile Include="EnumParameters.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

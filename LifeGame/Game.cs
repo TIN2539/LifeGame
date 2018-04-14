@@ -16,21 +16,23 @@ namespace LifeGame
 		private Generation generation;
 		private Memento memento;
 
-		public Game(int row, int column, int delay)
+		public Game(Parameters parameters)
 		{
-			field = new Field(row, column);
+			field = new Field(parameters.Row, parameters.Column);
 			generation = new Generation();
 			memento = new Memento();
-			commands = new List<ICommand>();
-			commands.Add(new RightCommand(this));
-			commands.Add(new LeftCommand(this));
-			commands.Add(new UpCommand(this));
-			commands.Add(new DownCommand(this));
-			commands.Add(new EnterCommand(this));
-			commands.Add(new SpacebarCommand(this));
+			commands = new List<ICommand>
+			{
+				new RightCommand(this),
+				new LeftCommand(this),
+				new UpCommand(this),
+				new DownCommand(this),
+				new EnterCommand(this),
+				new SpacebarCommand(this)
+			};
 			currentX = field.GetLeftMost();
 			currentY = field.GetTopMost();
-			this.delay = delay;
+			this.delay = parameters.Delay;
 		}
 
 		public bool AreAllDie()

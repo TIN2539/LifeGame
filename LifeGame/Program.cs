@@ -7,16 +7,9 @@ namespace LifeGame
 	{
 		internal static void Main(string[] parametersFromConsole)
 		{
-			// Default parameters
-			int row = 10;
-			int column = 40;
-			int delay = 300;
 			Game game = null;
-			if (parametersFromConsole.Length == 0)
-			{
-				game = new Game(row, column, delay);
-			}
-			else
+			Parameters parameters = new Parameters();
+			if (parametersFromConsole.Length != 0)
 			{
 				int resultOfParse;
 				char[] inputParameters = new char[parametersFromConsole.Length];
@@ -28,7 +21,7 @@ namespace LifeGame
 					}
 				}
 				bool correctParameters = true;
-				if (!inputParameters.Contains((char)Parameters.Width) && inputParameters.Contains((char)Parameters.Heigth))
+				if (!inputParameters.Contains((char)EnumParameters.Width) && inputParameters.Contains((char)EnumParameters.Heigth))
 				{
 					correctParameters = false;
 					Console.Write("Invalid arguments: ");
@@ -36,7 +29,7 @@ namespace LifeGame
 					Console.WriteLine("Width of the Universe was not specified.");
 					Console.ResetColor();
 				}
-				else if (inputParameters.Contains((char)Parameters.Width) && !inputParameters.Contains((char)Parameters.Heigth))
+				else if (inputParameters.Contains((char)EnumParameters.Width) && !inputParameters.Contains((char)EnumParameters.Heigth))
 				{
 					correctParameters = false;
 					Console.Write("Invalid arguments: ");
@@ -51,43 +44,38 @@ namespace LifeGame
 					{
 						symbolOfInputParametr = parametersFromConsole[i].First();
 						parametersFromConsole[i] = parametersFromConsole[i].Substring(1);
-						switch (symbolOfInputParametr)
+						if (int.TryParse(parametersFromConsole[i], out resultOfParse))
 						{
-							case (char)Parameters.Width:
-								if (int.TryParse(parametersFromConsole[i], out resultOfParse))
-								{
-									row = resultOfParse;
-								}
-								break;
-							case (char)Parameters.Heigth:
-								if (int.TryParse(parametersFromConsole[i], out resultOfParse))
-								{
-									column = resultOfParse;
-								}
-								break;
-							case (char)Parameters.Delay:
-								if (int.TryParse(parametersFromConsole[i], out resultOfParse))
-								{
-									delay = resultOfParse;
-								}
-								break;
+							switch (symbolOfInputParametr)
+							{
+								case (char)EnumParameters.Width:
+									parameters.Row = resultOfParse;
+									break;
+								case (char)EnumParameters.Heigth:
+									parameters.Column = resultOfParse;
+									break;
+								case (char)EnumParameters.Delay:
+									parameters.Delay = resultOfParse;
+									break;
+								default:
+									break;
+							}
 						}
+
 					}
-					game = new Game(row, column, delay);
+				}
+				else
+				{
+					Environment.Exit(0);
 				}
 			}
-
-			if (game != null)
+			game = new Game(parameters);
+			game.GetField().Paint();
+			do
 			{
-				game.GetField().Paint();
-
-				do
-				{
-					game.Update();
-				} while (!game.IsKeyPressed(Console.ReadKey(true).Key));
-
-				Console.SetCursorPosition(game.GetField().GetLeftMost(), game.GetField().GetHeight() + game.GetField().GetTopMost());
-			}
+				game.Update();
+			} while (!game.IsKeyPressed(Console.ReadKey(true).Key));
+			Console.SetCursorPosition(game.GetField().GetLeftMost(), game.GetField().GetHeight() + game.GetField().GetTopMost());
 		}
 	}
 }
