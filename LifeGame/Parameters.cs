@@ -8,9 +8,9 @@
 
 		public Parameters(int row, int column, int delay)
 		{
-			this.Column = column;
-			this.Row = row;
-			this.Delay = delay;
+			Column = column;
+			Row = row;
+			Delay = delay;
 		}
 
 		public int Column { get; set; }
