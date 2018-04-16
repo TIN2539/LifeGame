@@ -57,8 +57,6 @@ namespace LifeGame
 								case (char)EnumParameters.Delay:
 									parameters.Delay = resultOfParse;
 									break;
-								default:
-									break;
 							}
 						}
 
